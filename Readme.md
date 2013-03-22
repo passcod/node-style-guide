@@ -4,12 +4,43 @@ This is a guide for writing consistent and aesthetically pleasing node.js code.
 It is inspired by what is popular within the community, and flavored with some
 personal opinions.
 
-This guide was created by [Felix Geisendörfer](http://felixge.de/) and is
+This guide was originally created by [Felix Geisendörfer](http://felixge.de/) and is
 licensed under the [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
 license. You are encouraged to fork this repository and make adjustments
-according to your preferences.
+according to your preferences. This fork was first created to help with [mtwitter].
 
 ![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)
+
+[mtwitter]: https://github.com/passcod/mtwitter
+
+
+### JSHint
+
+Using the following options will help detecting a number of style points
+in a semi-automated fashion.
+
+```
+node:     true    Code is running inside of the Node runtime environment
+curly:    true    Always put curly braces around blocks in loops and conditionals
+eqeqeq:   true    Prohibits the use of == and != in favor of === and !==
+immed:    true    Prohibits the use of immediate function invocations without parens
+indent:   2       Two spaces for indentation
+latedef:  true    Prohibits the use of a variable before it was defined
+noarg:    true    Prohibits the use of arguments.caller and arguments.callee
+noempty:  true    Warns when you have an empty block in your code
+nonew:    true    Prohibits the use of constructor functions for side-effects
+plusplus: true    Prohibits the use of unary increment and decrement operators
+quotmark: single  Enforces the consistency of quotation marks
+undef:    true    Prohibits the use of explicitly undeclared variables
+unused:   true    Warns when you define and never use your variables
+trailing: true    Makes it an error to leave a trailing whitespace in your code
+maxlen:   80      Line length
+
+camelcase: true   Force all variable names to use either camelCase style or UPPER_CASE
+newcap:    true   Requires you to capitalize names of constructor functions
+nomen:     true   Disallows the use of dangling _ in variables
+```
+
 
 ## 2 Spaces for indention
 
@@ -31,6 +62,10 @@ cheap syntactic pleasures.
 
 [the opposition]: http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding
 [hnsemicolons]: http://news.ycombinator.com/item?id=1547647
+
+## Don't use ++ or --
+
+Use `+= 1` or `-= 1` instead.
 
 ## 80 characters per line
 
@@ -54,6 +89,38 @@ var foo = 'bar';
 var foo = "bar";
 ```
 
+## Spacing around blocks
+
+*Right:*
+
+```js
+if (iAmRight) {
+  execute(this);
+  execute(that);
+}
+```
+
+*Wrong:*
+
+```js
+if (iAmWrong) {
+
+  fooo();
+}
+
+function toBe(orNot) {
+  baar();
+
+}
+
+try {
+
+  baaz();
+
+} catch { ... }
+```
+
+
 ## Opening braces go on the same line
 
 Your opening braces go on the same line as the statement.
@@ -76,6 +143,64 @@ if (true)
 ```
 
 Also, notice the use of whitespace before and after the condition statement.
+
+## Closing braces between related blocks
+
+When using `else if`, `else`, or `catch`, put the closing brace of the
+second block inline with the statement:
+
+*Right:*
+
+```js
+if (true) {
+  claim('Logic works!');
+} else if (NaN === NaN) {
+  despair();
+} else {
+  ohno('!');
+}
+```
+
+*Wrong:*
+
+```js
+if (false) {
+  shout('Down with you!');
+}
+else if ("" == 0) {
+  hack();
+}
+else {
+  calmly('disengage');
+}
+```
+
+
+## Single-line conditionals
+
+…are not allowed.
+
+*Right:*
+
+```js
+if (true) {
+  something();
+}
+```
+
+*Wrong:*
+
+```js
+if (true) something();
+
+if (true)
+  something();
+
+// Very wrong:
+if (true)
+something();
+```
+
 
 ## Declare one variable per var statement
 
@@ -153,7 +278,7 @@ function bank_Account() {
 Constants should be declared as regular variables or static class properties,
 using all uppercase letters.
 
-Node.js / V8 actually supports mozilla's [const][const] extension, but
+Node.js / V8 actually supports mozilla's [const] extension, but
 unfortunately that cannot be applied to class members, nor is it part of any
 ECMA standard.
 
@@ -231,23 +356,6 @@ if (a == '') {
 
 [comparisonoperators]: https://developer.mozilla.org/en/JavaScript/Reference/Operators/Comparison_Operators
 
-## Use multi-line ternary operator
-
-The ternary operator should not be used on a single line. Split it up into multiple lines instead.
-
-*Right:*
-
-```js
-var foo = (a === b)
-  ? 1
-  : 2;
-```
-
-*Wrong:*
-
-```js
-var foo = (a === b) ? 1 : 2;
-```
 
 ## Do not extend built-in prototypes
 
@@ -295,6 +403,52 @@ if (isAuthorized) {
 if (user.isAdmin() || user.isModerator()) {
   console.log('losing');
 }
+```
+
+## Functions with many arguments
+
+```js
+oauth = new oauth.OAuth(
+  options.request_token_url,
+  options.access_token_url,
+  options.consumer_key,
+  options.consumer_secret,
+  '1.0',        // version
+  null,         // authorize callback?
+  'HMAC-SHA1',  // signature method
+  null,         // nonce size
+  this.options.headers
+);
+
+oauth.get(
+  url,
+  // ...
+  content_type,
+function(error, data, response) {
+  handle();
+});
+```
+
+- Closing _paren_ on newline, to demark a “block”
+- All arguments on their own line
+- Short comments to give precisions if necessary
+- Callbacks start unindented, to group closing _paren_ and
+  _bracket_; it also provides enough of a break to separate
+  the “blocks”
+
+### For smaller ones…
+
+This is acceptable, especially to split long concatenation. Notice:
+
+- The `+` is _before_ the split, just like a `,` would
+- The second line is aligned with the quote, i.e. just _after_ the last
+  opening brace
+- This is short enough not to need the closing _parens_ aligned with
+  the opening ones, as opposed to the example above
+
+```js
+callback(new Error('HTTP Error ' + response.statusCode + ': ' +
+                   http.STATUS_CODES[response.statusCode]));
 ```
 
 ## Write small functions
@@ -350,6 +504,29 @@ function isPercentage(val) {
 }
 ```
 
+
+## Function() style
+
+Crockford might damn your code, but the prevailing Node.js community style
+doesn't use that space between `function` and the *parens*:
+
+*Right:*
+
+```js
+function(arg) {
+  // ...
+}
+```
+
+*Wrong:*
+
+```js
+function (arg) {
+  // ...
+}
+```
+
+
 ## Name your closures
 
 Feel free to give your closures a name. It shows that you care about them, and
@@ -401,7 +578,8 @@ setTimeout(function() {
 
 Use slashes for both single line and multi line comments. Try to write
 comments that explain higher level mechanisms or clarify difficult
-segments of your code. Don't use comments to restate trivial things.
+segments of your code. Don't use comments to restate trivial things.  
+Use `/* ... */` for top-of-file headers only.
 
 *Right:*
 
@@ -454,3 +632,8 @@ Feel free to use getters that are free from [side effects][sideeffect], like
 providing a length property for a collection class.
 
 [sideeffect]: http://en.wikipedia.org/wiki/Side_effect_(computer_science)
+
+
+## EOF
+
+All files should have a newline at the end (to make diffing cleaner).
