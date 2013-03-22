@@ -283,7 +283,8 @@ using all uppercase letters.
 
 Node.js / V8 actually supports mozilla's [const] extension, but
 unfortunately that cannot be applied to class members, nor is it part of any
-ECMA standard.
+ECMA standard. _(Yes, [const is part of ES 6 / Harmony][constharmony], but that
+is not stable in any way yet)_
 
 *Right:*
 
@@ -306,6 +307,7 @@ File.fullPermissions = 0777;
 ```
 
 [const]: https://developer.mozilla.org/en/JavaScript/Reference/Statements/const
+[constharmony]: http://wiki.ecmascript.org/doku.php?id=harmony:const
 
 ## Object / Array creation
 
