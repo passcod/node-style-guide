@@ -7,7 +7,9 @@ personal opinions.
 This guide was originally created by [Felix Geisendörfer](http://felixge.de/) and is
 licensed under the [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
 license. You are encouraged to fork this repository and make adjustments
-according to your preferences. This fork was first created to help with [mtwitter].
+according to your preferences. This fork was first created to help with [mtwitter];
+it is somewhat more strict, and contains a little more depth of detail for a number
+of potentially contentious style points.
 
 ![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)
 
