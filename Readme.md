@@ -206,7 +206,8 @@ something();
 
 Declare one variable per var statement, it makes it easier to re-order the
 lines. Ignore [Crockford][crockfordconvention] on this, and put those
-declarations wherever they make sense.
+declarations wherever they make sense. You can also align the `=` if it
+makes things clearer.
 
 *Right:*
 
