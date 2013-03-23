@@ -49,7 +49,7 @@ This is optional, but strongly recommended. Strict mode
 [is getting pushed forth again][strictmodetime], and despite
 [protest from some part of the community][strictnodeornot], it encourages better coding
 practices, which is exactly what this document is about.  
-You might want to use the `globalstrictmode: true` JSHint option as well.
+You might want to use the `globalstrict: true` JSHint option as well.
 
 [strictmodetime]: http://www.nczonline.net/blog/2012/03/13/its-time-to-start-using-javascript-strict-mode/
 [strictnodeornot]: https://groups.google.com/forum/?fromgroups=#!topic/nodejs/w-khQf-Ezt8
